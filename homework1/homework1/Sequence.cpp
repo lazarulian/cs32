@@ -6,6 +6,8 @@
 //
 
 #include <stdio.h>
+#include <iostream>
+#include <string>
 #include "Sequence.h"
 using namespace std;
 
@@ -40,6 +42,16 @@ int Sequence::insert(int pos, const ItemType& value)
         return -1;
     }
     
+    if (pos < m_size) {
+        for (int i = pos; i < m_size; i++) {
+                m_arr[i+1] = m_arr[i];
+        }
+        m_arr[pos] = value;
+        m_size++;
+        cerr << "Inserted through shift right" << endl;
+        return 0;
+    }
+    
     if (pos == m_size) {
         m_arr[m_size] = value;
         m_size++;
@@ -47,13 +59,7 @@ int Sequence::insert(int pos, const ItemType& value)
         return 0;
     }
     
-    // If Inserted Correctly
-        for (int i = pos; i < m_size-1; i++) {
-                m_arr[i+1] = m_arr[i];
-        }
-        m_arr[pos] = value;
-        m_size++;
-        return 0;
+    return 0;
 } // End Insert
 
 
@@ -64,6 +70,7 @@ int Sequence::insert(const ItemType& value)
     {
         cerr << "Inserted at position 0" << endl;
         m_arr[0] = value;
+        m_size++;
         return 0;
     }
     
@@ -77,7 +84,7 @@ int Sequence::insert(const ItemType& value)
     // Finding the Smallest Value
     ItemType p = m_arr[0];
     int p_pos = 0;
-    for (int i = 0; i < m_size-1; i++)
+    for (int i = 0; i < m_size; i++)
     {
         if (m_arr[i] < p)
         {
@@ -102,7 +109,7 @@ int Sequence::insert(const ItemType& value)
     
     // Adding and Shifting Based off of smallest p
         
-    for (int i = p_pos; i < m_size-1; i++) {
+    for (int i = p_pos; i < m_size; i++) {
         for (int j = p_pos+1; j < m_size+1; j++) {
             m_arr[j] = m_arr[i];
         }
@@ -110,7 +117,7 @@ int Sequence::insert(const ItemType& value)
     // Inserting P
     m_arr[p_pos] = value;
     m_size++;
-//    return p;
+    return p_pos;
 
     return 0;
 }
