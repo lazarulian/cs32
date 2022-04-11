@@ -11,8 +11,8 @@
 #include <iostream>
 
 // Declaration of the Type Alias
-using ItemType = std::string;
-// using ItemType = unsigned long;
+//using ItemType = std::string;
+ using ItemType = unsigned long;
 // using ItemType = int;
 
 // Global Variables

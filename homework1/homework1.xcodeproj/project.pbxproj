@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3434248B2803E43D00471CC2 /* LevelList.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3434248A2803E43D00471CC2 /* LevelList.cpp */; };
+		3434248E2803E45E00471CC2 /* testLevelList.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3434248D2803E45E00471CC2 /* testLevelList.cpp */; };
 		343FAC9C28020B48007CCEC8 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 343FAC9B28020B48007CCEC8 /* main.cpp */; };
 		343FACA428020C40007CCEC8 /* Sequence.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 343FACA328020C40007CCEC8 /* Sequence.cpp */; };
 /* End PBXBuildFile section */
@@ -24,6 +26,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		3434248A2803E43D00471CC2 /* LevelList.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = LevelList.cpp; sourceTree = "<group>"; };
+		3434248C2803E44900471CC2 /* LevelList.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LevelList.h; sourceTree = "<group>"; };
+		3434248D2803E45E00471CC2 /* testLevelList.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = testLevelList.cpp; sourceTree = "<group>"; };
 		343FAC9828020B47007CCEC8 /* homework1 */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = homework1; sourceTree = BUILT_PRODUCTS_DIR; };
 		343FAC9B28020B48007CCEC8 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		343FACA228020C2B007CCEC8 /* Sequence.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Sequence.h; sourceTree = "<group>"; };
@@ -63,6 +68,9 @@
 				343FACA228020C2B007CCEC8 /* Sequence.h */,
 				343FACA328020C40007CCEC8 /* Sequence.cpp */,
 				343FAC9B28020B48007CCEC8 /* main.cpp */,
+				3434248C2803E44900471CC2 /* LevelList.h */,
+				3434248A2803E43D00471CC2 /* LevelList.cpp */,
+				3434248D2803E45E00471CC2 /* testLevelList.cpp */,
 			);
 			path = homework1;
 			sourceTree = "<group>";
@@ -124,7 +132,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3434248B2803E43D00471CC2 /* LevelList.cpp in Sources */,
 				343FACA428020C40007CCEC8 /* Sequence.cpp in Sources */,
+				3434248E2803E45E00471CC2 /* testLevelList.cpp in Sources */,
 				343FAC9C28020B48007CCEC8 /* main.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
