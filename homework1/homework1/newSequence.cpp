@@ -16,6 +16,24 @@ Sequence::Sequence(int user_size) : m_size(0), m_cap(0), dynamic_size(user_size)
     m_arr = new ItemType[dynamic_size];
 } // End Dynamic Constructor
 
+// Assignment Operator
+Sequence::Sequence &operator= (const Sequence &src) {
+    if(&src == this) {
+        return *this;
+    }
+
+    delete [] m_arr;
+    m_size = src.m_size;
+    m_cap = src.m_cap;
+    dynamic_size = src.dynamic_size;
+    m_arr = new ItemType[dynamic_size];
+
+    for (int i = 0; i < dynamic_size; i++) {
+        m_arr[i] = src.m_arr[i];
+    }
+
+    return *this;
+}
 
 Sequence::~Sequence() {
     delete [] m_arr;
@@ -32,7 +50,6 @@ Sequence::Sequence(const Sequence &src) {
     }
 }
 
-// Assignment Constructor
 
 
 bool Sequence::empty() const
@@ -207,16 +224,20 @@ int Sequence::find(const ItemType& value) const
 void Sequence::swap(Sequence& other)
 {
     int temp_size = other.m_size;
-    other.m_size = this-> m_size;
+    int temp_cap = other.m_cap;
+    int temp_dynamic_size = other.dynamic_size;
+    ItemType *temp_arr = other.m_arr;
+
+    other.m_size = this->m_size;
+    other.m_cap = this->m_cap;
+    other.dynamic_size = this->dynamic_size;
+    other.m_arr = this->m_arr;
+
     this->m_size = temp_size;
-    
-    ItemType holder;
-    
-    for (int i = 0; i <= dynamic_size; i++) {
-        holder = other.m_arr[i];
-        other.m_arr[i] = this->m_arr[i];
-        this->m_arr[i] = holder;
-    }
+    this->m_cap = temp_cap;
+    this->dynamic_size = temp_dynamic_size;
+    this->m_arr = temp_arr;
+
 
 }
 
