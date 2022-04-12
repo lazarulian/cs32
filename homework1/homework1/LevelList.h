@@ -25,8 +25,8 @@ class LevelList
 {
 public:
     LevelList();
-    bool add(ItemType level);
-    bool remove(ItemType level);
+    bool add(unsigned long level);
+    bool remove(unsigned long level);
     int size() const;
     ItemType minimum() const;
     ItemType maximum() const;

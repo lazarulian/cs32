@@ -9,7 +9,7 @@
 #include <cassert>
 using namespace std;
 
-void test()
+int main()
 {
     Sequence s;
     s.insert(0, 10);
@@ -18,10 +18,5 @@ void test()
     ItemType x = 999;
     assert(s.get(0, x) && x == 20);
     assert(s.get(1, x) && x == 10);
-}
-
-int main()
-{
-    test();
     cout << "Passed all tests" << endl;
 }
