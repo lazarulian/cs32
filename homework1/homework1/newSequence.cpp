@@ -4,6 +4,7 @@
 #include <iostream>
 #include <string>
 #include "newSequence.h"
+
 using namespace std;
 
 Sequence::Sequence() : m_size(0), m_cap(0), dynamic_size(DEFAULT_MAX_ITEMS)
@@ -16,24 +17,6 @@ Sequence::Sequence(int user_size) : m_size(0), m_cap(0), dynamic_size(user_size)
     m_arr = new ItemType[dynamic_size];
 } // End Dynamic Constructor
 
-// Assignment Operator
-Sequence::Sequence &operator= (const Sequence &src) {
-    if(&src == this) {
-        return *this;
-    }
-
-    delete [] m_arr;
-    m_size = src.m_size;
-    m_cap = src.m_cap;
-    dynamic_size = src.dynamic_size;
-    m_arr = new ItemType[dynamic_size];
-
-    for (int i = 0; i < dynamic_size; i++) {
-        m_arr[i] = src.m_arr[i];
-    }
-
-    return *this;
-}
 
 Sequence::~Sequence() {
     delete [] m_arr;
@@ -50,6 +33,23 @@ Sequence::Sequence(const Sequence &src) {
     }
 }
 
+// Assignment Operator
+Sequence& Sequence::operator= (const Sequence &src) {
+    if(&src == this) {
+        return *this;
+    }
+    
+    delete [] m_arr;
+    m_size = src.m_size;
+    m_cap = src.m_cap;
+    dynamic_size = src.dynamic_size;
+    m_arr = new ItemType[dynamic_size];
+    
+    for (int i = 0; i < dynamic_size; i++) {
+        m_arr[i] = src.m_arr[i];
+    }
+    return *this;
+}
 
 
 bool Sequence::empty() const
@@ -80,7 +80,7 @@ int Sequence::insert(int pos, const ItemType& value)
     
     if (pos < m_size) {
         for (int i = pos; i < m_size; i++) {
-                m_arr[i+1] = m_arr[i];
+            m_arr[i+1] = m_arr[i];
         }
         m_arr[pos] = value;
         m_size++;
@@ -144,7 +144,7 @@ int Sequence::insert(const ItemType& value)
     
     
     // Adding and Shifting Based off of smallest p
-        
+    
     for (int i = p_pos; i < m_size; i++) {
         for (int j = p_pos+1; j < m_size+1; j++) {
             m_arr[j] = m_arr[i];
@@ -154,7 +154,7 @@ int Sequence::insert(const ItemType& value)
     m_arr[p_pos] = value;
     m_size++;
     return p_pos;
-
+    
     return 0;
 }
 
@@ -181,8 +181,8 @@ int Sequence::remove(const ItemType& value)
             m_size--;
             cerr << i << endl;
             for (int j = i; j < m_size; j++) {
-                    m_arr[j] = m_arr[j+1];
-                }
+                m_arr[j] = m_arr[j+1];
+            }
             removal_counter++;
         } // end if
     }
@@ -227,17 +227,17 @@ void Sequence::swap(Sequence& other)
     int temp_cap = other.m_cap;
     int temp_dynamic_size = other.dynamic_size;
     ItemType *temp_arr = other.m_arr;
-
+    
     other.m_size = this->m_size;
     other.m_cap = this->m_cap;
     other.dynamic_size = this->dynamic_size;
     other.m_arr = this->m_arr;
-
+    
     this->m_size = temp_size;
     this->m_cap = temp_cap;
     this->dynamic_size = temp_dynamic_size;
     this->m_arr = temp_arr;
-
-
+    
+    
 }
 

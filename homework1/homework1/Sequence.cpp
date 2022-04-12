@@ -7,13 +7,12 @@
 
 #include <stdio.h>
 #include <iostream>
-#include <string>
 #include "Sequence.h"
 using namespace std;
 
 Sequence::Sequence() : m_size(0), m_cap(0)
 { // Create an empty sequence (i.e., one whose size() is 0)
-
+    
 } // End Default Constructor
 
 bool Sequence::empty() const
@@ -44,7 +43,7 @@ int Sequence::insert(int pos, const ItemType& value)
     
     if (pos < m_size) {
         for (int i = pos; i < m_size; i++) {
-                m_arr[i+1] = m_arr[i];
+            m_arr[i+1] = m_arr[i];
         }
         m_arr[pos] = value;
         m_size++;
@@ -108,7 +107,7 @@ int Sequence::insert(const ItemType& value)
     
     
     // Adding and Shifting Based off of smallest p
-        
+    
     for (int i = p_pos; i < m_size; i++) {
         for (int j = p_pos+1; j < m_size+1; j++) {
             m_arr[j] = m_arr[i];
@@ -118,7 +117,7 @@ int Sequence::insert(const ItemType& value)
     m_arr[p_pos] = value;
     m_size++;
     return p_pos;
-
+    
     return 0;
 }
 
@@ -145,8 +144,8 @@ int Sequence::remove(const ItemType& value)
             m_size--;
             cerr << i << endl;
             for (int j = i; j < m_size; j++) {
-                    m_arr[j] = m_arr[j+1];
-                }
+                m_arr[j] = m_arr[j+1];
+            }
             removal_counter++;
         } // end if
     }
@@ -198,5 +197,5 @@ void Sequence::swap(Sequence& other)
         other.m_arr[i] = this->m_arr[i];
         this->m_arr[i] = holder;
     }
-
+    
 }

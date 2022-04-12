@@ -10,6 +10,7 @@
 #include <cassert>
 #include "Sequence.h"
 #include "LevelList.h"
+using namespace std;
 
 int main() {
     
