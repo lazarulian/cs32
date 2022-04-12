@@ -3,7 +3,7 @@
 //  homework1
 //
 //  Created by Apurva Shah on 4/10/22.
-//
+
 
 #include <stdio.h>
 #include <iostream>
@@ -28,6 +28,8 @@ int main() {
     assert(l.remove(46) == true);
     assert(l.size() == 3);
     assert(l.remove(34) == false);
+    assert(l.maximum() == 88);
+    assert(l.minimum() == 31);
     
     return 0;
 }

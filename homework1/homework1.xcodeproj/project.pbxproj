@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		341305262804BEB500552797 /* newSequence.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 341305252804BEB500552797 /* newSequence.cpp */; };
+		341305292804BEDE00552797 /* testnewSequence.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 341305282804BEDE00552797 /* testnewSequence.cpp */; };
 		3434248B2803E43D00471CC2 /* LevelList.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3434248A2803E43D00471CC2 /* LevelList.cpp */; };
 		3434248E2803E45E00471CC2 /* testLevelList.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3434248D2803E45E00471CC2 /* testLevelList.cpp */; };
 		343FAC9C28020B48007CCEC8 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 343FAC9B28020B48007CCEC8 /* main.cpp */; };
@@ -26,6 +28,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		341305252804BEB500552797 /* newSequence.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = newSequence.cpp; sourceTree = "<group>"; };
+		341305272804BEC400552797 /* newSequence.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = newSequence.h; sourceTree = "<group>"; };
+		341305282804BEDE00552797 /* testnewSequence.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = testnewSequence.cpp; sourceTree = "<group>"; };
 		3434248A2803E43D00471CC2 /* LevelList.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = LevelList.cpp; sourceTree = "<group>"; };
 		3434248C2803E44900471CC2 /* LevelList.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LevelList.h; sourceTree = "<group>"; };
 		3434248D2803E45E00471CC2 /* testLevelList.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = testLevelList.cpp; sourceTree = "<group>"; };
@@ -71,6 +76,9 @@
 				3434248C2803E44900471CC2 /* LevelList.h */,
 				3434248A2803E43D00471CC2 /* LevelList.cpp */,
 				3434248D2803E45E00471CC2 /* testLevelList.cpp */,
+				341305272804BEC400552797 /* newSequence.h */,
+				341305252804BEB500552797 /* newSequence.cpp */,
+				341305282804BEDE00552797 /* testnewSequence.cpp */,
 			);
 			path = homework1;
 			sourceTree = "<group>";
@@ -135,7 +143,9 @@
 				3434248B2803E43D00471CC2 /* LevelList.cpp in Sources */,
 				343FACA428020C40007CCEC8 /* Sequence.cpp in Sources */,
 				3434248E2803E45E00471CC2 /* testLevelList.cpp in Sources */,
+				341305292804BEDE00552797 /* testnewSequence.cpp in Sources */,
 				343FAC9C28020B48007CCEC8 /* main.cpp in Sources */,
+				341305262804BEB500552797 /* newSequence.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
