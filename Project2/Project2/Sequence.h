@@ -8,29 +8,30 @@
 #ifndef Sequence_h
 #define Sequence_h
 
+#include <iostream>
+#include <cassert>
+#include <string>
+
 ///////////////////////////////////////////////////////////////////
 // Declaration of the Type Alias
 ///////////////////////////////////////////////////////////////////
 //using ItemType = std::string;
-using ItemType = unsigned long;
-// using ItemType = int;
+//using ItemType = unsigned long;
+ using ItemType = int;
 
 ///////////////////////////////////////////////////////////////////
 // Sequence Class Declaration
 ///////////////////////////////////////////////////////////////////
 
-#include <iostream>
-#include <cassert>
-#include <string>
 
 class Sequence
 {
 public:
     // Constructor, Destructor, Assignment Operator, Copy Constructor
-    Sequence();
-    ~Sequence();
-    Sequence &operator=(const Sequence &src);
-    Sequence(const Sequence &src);
+    Sequence(); // implemented
+    ~Sequence(); // implemented
+    Sequence &operator=(const Sequence &src); // implemented
+    Sequence(const Sequence &src); // implemented
     
     
     // Member Functions
@@ -43,7 +44,7 @@ public:
     bool get(int pos, ItemType& value) const; // implemented
     bool set(int pos, const ItemType& value); // implemented
     int find(const ItemType& value) const; // implemented
-    void swap(Sequence& other);
+    void swap(Sequence& other); // implemented
     void dump() const; // implemented
     
 private:
@@ -59,6 +60,13 @@ private:
     Node* tail;
     
 };
+
+///////////////////////////////////////////////////////////////////
+// Non Member Functions
+///////////////////////////////////////////////////////////////////
+
+int subsequence(const Sequence& seq1, const Sequence& seq2); // implemented
+void interleave(const Sequence& seq1, const Sequence& seq2, Sequence& result);
 
 
 #endif /* Sequence_h */
