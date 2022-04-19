@@ -1,0 +1,1 @@
+Working to create copy constructors, assignment operators, destructors, and class interactions using dynamically allocated arrays. This is an exercise to test the understanding of resource management and arrays.
