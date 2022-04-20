@@ -1,72 +1,64 @@
-//
-//  Sequence.h
-//  Project2
-//
-//  Created by Apurva Shah on 4/15/22.
-//
+// Sequence.h
+// Apurva Shah 705595011
 
-#ifndef Sequence_h
-#define Sequence_h
-
+#include <stdio.h>
 #include <iostream>
-#include <cassert>
 #include <string>
 
-///////////////////////////////////////////////////////////////////
-// Declaration of the Type Alias
-///////////////////////////////////////////////////////////////////
-//using ItemType = std::string;
-//using ItemType = unsigned long;
- using ItemType = int;
+#ifndef SEQUENCE_INCLUDED
+#define SEQUENCE_INCLUDED
 
-///////////////////////////////////////////////////////////////////
-// Sequence Class Declaration
-///////////////////////////////////////////////////////////////////
+using ItemType = std::string;
 
+////////////////////////////////
+///  Class Declaration
+////////////////////////////////
 
 class Sequence
 {
-public:
+    public:
     // Constructor, Destructor, Assignment Operator, Copy Constructor
-    Sequence(); // implemented
-    ~Sequence(); // implemented
-    Sequence &operator=(const Sequence &src); // implemented
-    Sequence(const Sequence &src); // implemented
-    
-    
-    // Member Functions
-    bool empty() const; // implemented
-    int size() const; // implemented
-    int insert(int pos, const ItemType& value); // implemented
-    int insert(const ItemType& value); // implemented
-    bool erase(int pos); // implemented
-    int remove(const ItemType& value); // implemented
-    bool get(int pos, ItemType& value) const; // implemented
-    bool set(int pos, const ItemType& value); // implemented
-    int find(const ItemType& value) const; // implemented
-    void swap(Sequence& other); // implemented
-    void dump() const; // implemented
-    
-private:
+    Sequence();
+    ~Sequence();
+    Sequence(const Sequence &src);
+    Sequence &operator=(const Sequence &src);
+
+    // Public Member Functions
+    bool empty() const;
+    int size() const;
+    int insert(int pos, const ItemType &value);
+    int insert(const ItemType &value);
+    bool erase(int pos);
+    int remove(const ItemType &value);
+    bool get(int pos, ItemType &value) const;
+    bool set(int pos, const ItemType &value);
+    int find(const ItemType &value) const;
+    void swap(Sequence &other);
+
+    private:
+    int m_size;
+
+    // Declaring the Nodes
     struct Node
     {
         ItemType value;
-        Node* next;
-        Node* prev;
+        Node *next;
+        Node *prev;
     };
-    
-    int m_size;
-    Node* head;
-    Node* tail;
-    
+
+    Node *head;
+    Node *tail;
+    // based off of nachenberg slides
+    void add_to_sequence(int pos, const ItemType &value);
+    void addFront(const ItemType &value);
+    void addRear(const ItemType &value);
+    bool delete_element(int pos);
 };
 
-///////////////////////////////////////////////////////////////////
-// Non Member Functions
-///////////////////////////////////////////////////////////////////
+////////////////////////////////
+/// Algorithms
+////////////////////////////////
+int subsequence(const Sequence &seq1, const Sequence &seq2);
+void interleave(const Sequence &seq1, const Sequence &seq2, Sequence &result);
 
-int subsequence(const Sequence& seq1, const Sequence& seq2); // implemented
-void interleave(const Sequence& seq1, const Sequence& seq2, Sequence& result);
-
-
-#endif /* Sequence_h */
+#endif // SEQUENCE_INCLUDED

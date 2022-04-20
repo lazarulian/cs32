@@ -2,6 +2,8 @@
 #include <iostream>
 #include <cassert>
 
+using namespace std;
+
 int main()
 {
     const int maxFill = 20;
@@ -367,5 +369,6 @@ int main()
         interleave(t51, t52, t53);
         assert(t53.size() == 0);
     }
-    std::cout << "           ',\n        .-`-,\\__\n          .\"`   `,\n        .'_.  ._  `;.\n    __ / `      `  `.\\ .--.\n   /--,| 0)   0)     )`_.-,)\n  |    ;.-----.__ _-');   /\n   '--./         `.`/  `\"`\n      :   '`      |.\n      | \     /  //\n       \\ '---'  /'\n        `------' \\\n         _/       `--..." << std::endl;
+    cout << "passed all test cases" << endl;
+    return 0;
 }
