@@ -16,7 +16,7 @@ LevelList::LevelList() : m_sequence()
 {
 }
 
-bool LevelList::add(ItemType level)
+bool LevelList::add(unsigned long level)
 {
     if (level >= MIN_LEVEL && level <= MAX_LEVEL && m_sequence.size() < DEFAULT_MAX_ITEMS)
     {
@@ -26,7 +26,7 @@ bool LevelList::add(ItemType level)
     return false;
 }
 
-bool LevelList::remove(ItemType level)
+bool LevelList::remove(unsigned long level)
 {
     // Remove one instance of the specified level from the level list.
     // Return true if a level was removed; otherwise false.
