@@ -4,7 +4,7 @@
 > ***UCLA Henry Samueli School of Engineering and Applied Science***
 
 ## Final Grade Recieved: Pending
-###Projects
+### Projects
 ###### Project 1
 - Impmented a feature to an existing game which utlizies mapping to display a character array of places the player has visited
 - Dives deep into the mechanics behind class construction and object oriented design
@@ -16,7 +16,7 @@
 ###### Project 3
 ###### Project 4
 
-###Assignments
+### Assignments
 ###### Homework 1
 - Implemented a sequence class that takes information and stores it in a regular array, and then a dynamically allocated array
 - Implemented a copy constructor, assignment operator, and destructor for this class to prevent memory leaks
@@ -29,7 +29,7 @@
 ###### Homework 4
 ###### Homework 5
 
-###Grades
+### Grades
                     
 Assignment  | Grade Received
 ------------- | -------------
