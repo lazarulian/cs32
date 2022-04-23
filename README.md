@@ -36,7 +36,7 @@ Assignment  | Grade Received
 Midterm 1 | Pending
 Midterm 2 | Pending
 Final Exam | Pending
-|
+ | 
 Homework 1   | 100%
 Homework 2  | 84%
 Homework 3  | Pending
