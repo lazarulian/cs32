@@ -66,6 +66,8 @@
         "algorithm": "cpp",
         "functional": "cpp",
         "utility": "cpp",
-        "stack": "cpp"
+        "stack": "cpp",
+        "deque": "cpp",
+        "queue": "cpp"
     }
 }

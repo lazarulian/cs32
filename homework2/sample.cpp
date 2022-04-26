@@ -1,4 +1,4 @@
-// eval.cpp Apurva Shah 705595011
+// sample.cpp Apurva Shah 705595011
 
 #include <iostream>
 #include <string>
@@ -23,27 +23,23 @@ bool evaluatePostFix(string postfix);
 /////////////////////////////////////////
 
 // charToBool
-bool charToBool(char value)
+bool charToBool(char value) 
 { // converts character types into boolean expressions
-    if (value == 'T')
-    {
+    if (value == 'T') {
         return true;
     }
-    else
-    {
+    else {
         return false;
     }
 }
 
 // boolToChar
-char boolToChar(bool value)
+char boolToChar(bool value) 
 { // converts bools to char values
-    if (value == true)
-    {
+    if (value == true) {
         return 'T';
     }
-    else
-    {
+    else {
         return 'F';
     }
 }
@@ -203,7 +199,7 @@ bool isValid(string input)
             }
             break;
         case '!':
-            if (i == infix.size() - 1)
+            if (i == infix.size()-1)
                 return false;
             break;
         case '|':
@@ -230,6 +226,8 @@ bool isValid(string input)
     return true;
 
 } // end isValid
+
+
 
 // prefixToPost
 string prefixToPost(string infix)
@@ -258,8 +256,7 @@ string prefixToPost(string infix)
                 postfix += opstack.top();
                 opstack.pop();
             }
-            if (!opstack.empty())
-            {
+            if (!opstack.empty()) {
                 opstack.pop();
             }
             break;
@@ -293,23 +290,21 @@ string prefixToPost(string infix)
 } // end function
 
 // evaluatePostFix
-bool evaluatePostFix(string postfix)
-{ // evaluates the postfix expression and returns a boollean
-    stack<char> opstack;
+bool evaluatePostFix(string postfix) 
+{ // evaluates the postfix expression and returns a boollean 
+    stack <char> opstack;
     bool optop1;
     bool optop2;
     for (int i = 0; i < postfix.size(); i++)
     {
         // Operands
         char ch = postfix[i];
-        if (ch == 'T' || ch == 'F')
-        {
+        if (ch == 'T' || ch == 'F') {
             opstack.push(ch);
             continue;
         }
         // Exclamation Points
-        else if (ch == '!')
-        {
+        else if (ch == '!') {
             if (!opstack.empty())
             {
                 optop1 = charToBool(opstack.top());
@@ -318,18 +313,18 @@ bool evaluatePostFix(string postfix)
                 continue;
             }
         }
-        else
+        else 
         {
-            if (ch == '&' && opstack.size() >= 2)
+            if (ch == '&' && opstack.size() >= 2) 
             {
                 optop1 = charToBool(opstack.top());
                 opstack.pop();
                 optop2 = charToBool(opstack.top());
                 opstack.pop();
-                opstack.push(boolToChar(optop2 & optop1));
+                opstack.push(boolToChar(optop2&optop1));
                 continue;
             }
-            if (ch == '|' && opstack.size() >= 2)
+            if (ch == '|' && opstack.size() >= 2) 
             {
                 optop1 = charToBool(opstack.top());
                 cerr << "optop1 is: " << optop1 << endl;
@@ -337,7 +332,7 @@ bool evaluatePostFix(string postfix)
                 optop2 = charToBool(opstack.top());
                 cerr << "optop2 is: " << optop2 << endl;
                 opstack.pop();
-                opstack.push(boolToChar(optop2 | optop1));
+                opstack.push(boolToChar(optop2|optop1));
                 continue;
             }
             continue;
@@ -345,8 +340,7 @@ bool evaluatePostFix(string postfix)
     } // end for loop
     if (opstack.size() == 1)
         return charToBool(opstack.top());
-    else
-    {
+    else {
         cerr << "you fucked up bigtime somewhere" << endl;
         return false;
     }
@@ -355,13 +349,11 @@ bool evaluatePostFix(string postfix)
 // evaluate
 int evaluate(string infix, string &postfix, bool &result)
 { // compiles how professor wants it
-    if (isValid(infix) == false)
-    {
+    if (isValid(infix) == false) {
         cerr << "It is not valid" << endl;
         return 1;
     }
-    else
-    {
+    else {
         postfix = prefixToPost(infix);
         result = evaluatePostFix(postfix);
         return 0;
@@ -370,21 +362,24 @@ int evaluate(string infix, string &postfix, bool &result)
 
 int main()
 {
-    string pf;
-    bool answer;
-    assert(evaluate("T| F", pf, answer) == 0 && pf == "TF|" && answer);
-    assert(evaluate("T|", pf, answer) == 1);
-    assert(evaluate("F F", pf, answer) == 1);
-    assert(evaluate("TF", pf, answer) == 1);
-    assert(evaluate("()", pf, answer) == 1);
-    assert(evaluate("()T", pf, answer) == 1);
-    assert(evaluate("T(F|T)", pf, answer) == 1);
-    assert(evaluate("T(&T)", pf, answer) == 1);
-    assert(evaluate("(T&(F|F)", pf, answer) == 1);
-    assert(evaluate("T+F", pf, answer) == 1);
-    assert(evaluate("", pf, answer) == 1);
-    assert(evaluate("F  |  !F & (T&F) ", pf, answer) == 0 && pf == "FF!TF&&|" && !answer);
-    assert(evaluate(" F  ", pf, answer) == 0 && pf == "F" && !answer);
-    assert(evaluate("((T))", pf, answer) == 0 && pf == "T" && answer);
-    cout << "Passed all tests" << endl;
+	string cases[57] = {
+		"", "()", "(())", ")(", "))((", 
+		"(T", "T)", "((T|F)", "(T|F))",
+		")T(", ")F(", "))T((", "))F((",
+		"TT", "TF", "FT", "FF", "TTT", "TTF", "TFT", "FTT", "TFF", "FFT", "FTF", "FFF",
+		"T&&T", "T&|F", "T|&F", "T!&F", "T!|F", "T!!F",
+		"&", "&T", "&F", "|", "|T", "|F", "T&", "F&", "T|", "F|",
+		"(&T&T)", "(|T&T)", "(T&T!)", "(T&T&)", "(T&T|)", "(T&T)!",
+		"(&T)", "(&F)", "(|T)", "(|F)",
+		"T!T", "T!F", "F!T", "F!F",
+		"T!", "F!"
+	};
+	string postfix = "";
+	bool result = false;
+    for (int i = 0; i < 57; i++)
+	{
+		cout << "Case: " << cases[i] << endl;
+		assert(evaluate(cases[i], postfix, result) == 1);
+		assert(result == false);
+	}
 }
