@@ -29,7 +29,6 @@ private:
 
 bool pathExists(char maze[][10], int sr, int sc, int er, int ec)
 {
-    Coord end_coord = Coord(er, ec);
     stack <Coord> s;
     maze[sr][sc] = '~'; // setting the starting position
     s.push(Coord(sr, sc));
