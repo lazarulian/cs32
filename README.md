@@ -26,6 +26,8 @@
 - Learned about implementing Breadth-first search, and depth-first search.
 - Implemented an algorithm that converts boolean expression into infix notation using stacks and queues
 #### Homework 3
+- Implemented recursive algorithms that we would usually use iterative practices for. 
+- Implemented inherited classes and polymorphic functions within the classes
 #### Homework 4
 #### Homework 5
 
@@ -38,7 +40,7 @@ Midterm 2 | Pending
 Final Exam | Pending
 --- | ---
 Homework 1   | 84%
-Homework 2  | Pending%
+Homework 2  | Pending
 Homework 3  | Pending
 Homework 4  | Pending
 Homework  5| Pending
