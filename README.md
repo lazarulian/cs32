@@ -44,6 +44,6 @@ Homework 4  | Pending
 Homework  5| Pending
 --- | ---
 Project 1 | 100%
-Project 2 | 100%
+Project 2 | 98%
 Project 3 | Pending
 Project 4 | Pending
