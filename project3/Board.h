@@ -28,3 +28,12 @@ class Board
 };
 
 #endif // BOARD_INCLUDED
+
+
+// Vector to add the ships
+// adding a ship - ship struct into the vector
+
+
+
+// id into the vector of the ship ids
+

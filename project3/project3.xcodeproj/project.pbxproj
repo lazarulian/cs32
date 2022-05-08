@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		3404A5C4282711AC00AF38D4 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3404A5C3282711AC00AF38D4 /* main.cpp */; };
+		3491FC1D28271D83007B291F /* Player.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3491FC1C28271D83007B291F /* Player.cpp */; };
+		3491FC2328271D8E007B291F /* Game.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3491FC2028271D8E007B291F /* Game.cpp */; };
+		3491FC2428271D8E007B291F /* Board.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 3491FC2228271D8E007B291F /* Board.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -25,6 +28,13 @@
 /* Begin PBXFileReference section */
 		3404A5B92827115A00AF38D4 /* project3 */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = project3; sourceTree = BUILT_PRODUCTS_DIR; };
 		3404A5C3282711AC00AF38D4 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		3491FC1B28271D83007B291F /* Player.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Player.h; sourceTree = "<group>"; };
+		3491FC1C28271D83007B291F /* Player.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Player.cpp; sourceTree = "<group>"; };
+		3491FC1E28271D8E007B291F /* globals.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = globals.h; sourceTree = "<group>"; };
+		3491FC1F28271D8E007B291F /* Game.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Game.h; sourceTree = "<group>"; };
+		3491FC2028271D8E007B291F /* Game.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Game.cpp; sourceTree = "<group>"; };
+		3491FC2128271D8E007B291F /* Board.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Board.h; sourceTree = "<group>"; };
+		3491FC2228271D8E007B291F /* Board.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Board.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -41,6 +51,13 @@
 		3404A5B02827115A00AF38D4 = {
 			isa = PBXGroup;
 			children = (
+				3491FC1F28271D8E007B291F /* Game.h */,
+				3491FC2028271D8E007B291F /* Game.cpp */,
+				3491FC2128271D8E007B291F /* Board.h */,
+				3491FC2228271D8E007B291F /* Board.cpp */,
+				3491FC1C28271D83007B291F /* Player.cpp */,
+				3491FC1B28271D83007B291F /* Player.h */,
+				3491FC1E28271D8E007B291F /* globals.h */,
 				3404A5C3282711AC00AF38D4 /* main.cpp */,
 				3404A5BA2827115A00AF38D4 /* Products */,
 			);
@@ -111,6 +128,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3491FC2328271D8E007B291F /* Game.cpp in Sources */,
+				3491FC1D28271D83007B291F /* Player.cpp in Sources */,
+				3491FC2428271D8E007B291F /* Board.cpp in Sources */,
 				3404A5C4282711AC00AF38D4 /* main.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

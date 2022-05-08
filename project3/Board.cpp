@@ -5,6 +5,10 @@
 
 using namespace std;
 
+// Globals
+const int max_rows = 9;
+const int max_cols = 9;
+
 class BoardImpl
 {
   public:
@@ -22,17 +26,31 @@ class BoardImpl
       // TODO:  Decide what private members you need.  Here's one that's likely
       //        to be useful:
     const Game& m_game;
+    char board1[max_rows][max_cols];
+    char board2[max_rows][max_cols];
 };
 
 BoardImpl::BoardImpl(const Game& g)
  : m_game(g)
 {
-    // This compiles, but may not be correct
+    // Filling the Board with Periods
+    for (int i = 0; i < m_game.cols(); i++) {
+        for (int j = 0; j < m_game.rows(); j++){
+            board1[j][i] = '.';
+            board2[j][i] = '.';
+        }
+    } // end for loop
 }
 
 void BoardImpl::clear()
 {
-    // This compiles, but may not be correct
+    // Filling the Board with Periods
+    for (int i = 0; i < m_game.cols(); i++) {
+        for (int j = 0; j < m_game.rows(); j++){
+            board1[j][i] = '.';
+            board2[j][i] = '.';
+        }
+    } // end for loop
 }
 
 void BoardImpl::block()
@@ -42,21 +60,32 @@ void BoardImpl::block()
         for (int c = 0; c < m_game.cols(); c++)
             if (randInt(2) == 0)
             {
+                board1[r][c] = '~';
+                board2[r][c] = '~';
                 ; // TODO:  Replace this with code to block cell (r,c)
             }
 }
 
 void BoardImpl::unblock()
-{
+{ // unblocks the board
     for (int r = 0; r < m_game.rows(); r++)
         for (int c = 0; c < m_game.cols(); c++)
         {
+            if (board1[r][c] == '~')
+                board1[r][c] = '.';
+            if (board2[r][c] == '~')
+                board2[r][c] = '.';
+            else
+                continue;
             ; // TODO:  Replace this with code to unblock cell (r,c) if blocked
         }
 }
 
 bool BoardImpl::placeShip(Point topOrLeft, int shipId, Direction dir)
 {
+    // ShipID Inavlid
+    
+    
     return false; // This compiles, but may not be correct
 }
 

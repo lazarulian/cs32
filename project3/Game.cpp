@@ -4,6 +4,8 @@
 #include "globals.h"
 #include <iostream>
 #include <string>
+#include <vector>
+#include <algorithm>
 #include <cstdlib>
 #include <cctype>
 
@@ -13,6 +15,7 @@ class GameImpl
 {
   public:
     GameImpl(int nRows, int nCols);
+    ~GameImpl();
     int rows() const;
     int cols() const;
     bool isValid(Point p) const;
@@ -23,6 +26,18 @@ class GameImpl
     char shipSymbol(int shipId) const;
     string shipName(int shipId) const;
     Player* play(Player* p1, Player* p2, Board& b1, Board& b2, bool shouldPause);
+    
+private:
+    int m_rows;
+    int m_cols;
+    int numShips;
+    struct Ship {
+        int id;
+        int length;
+        string name;
+        char symbol;
+    };
+    vector<Ship*> harbor;
 };
 
 void waitForEnter()
@@ -31,19 +46,28 @@ void waitForEnter()
     cin.ignore(10000, '\n');
 }
 
-GameImpl::GameImpl(int nRows, int nCols)
+GameImpl::GameImpl(int nRows, int nCols) : m_rows(nRows), m_cols(nCols), numShips(0)
 {
     // This compiles but may not be correct
+}
+ // Destructor
+GameImpl::~GameImpl()
+{
+    for (int i = 0; i < numShips; i++)
+    {
+        delete harbor[i];
+    }
+    cerr << "Destructed" << endl;
 }
 
 int GameImpl::rows() const
 {
-    return -1;  // This compiles but may not be correct
+    return m_rows;
 }
 
 int GameImpl::cols() const
 {
-    return -1;  // This compiles but may not be correct
+    return m_cols;
 }
 
 bool GameImpl::isValid(Point p) const
@@ -58,27 +82,76 @@ Point GameImpl::randomPoint() const
 
 bool GameImpl::addShip(int length, char symbol, string name)
 {
-    return false;  // This compiles but may not be correct
-}
+    ////////////////////////////////////////
+    ///Test Cases
+    ///////////////////////////////////////
+
+    // Checking Length
+    if (length > 5)
+        return false;
+    if (length < 2)
+        return false;
+    
+    // Checking The Symbol of the Ship
+    
+    if (isprint(symbol) == 0)
+        return false;
+    if (symbol == 'X' || symbol == 'o' || symbol == '.')
+        return false;
+    
+    // Checking the Name of the Ship
+    if (name.size() == 0 || name.length() == 0)
+        return false;
+    
+    ////////////////////////////////////////
+    ///Adding the Ships
+    ///////////////////////////////////////
+    
+    Ship* a;
+    a = new Ship;
+    a->id = this->numShips;
+    a->length = length;
+    a->name = name;
+    a->symbol = symbol;
+    harbor.push_back(a);
+    numShips++;
+    return true;
+} // finish addShip
 
 int GameImpl::nShips() const
-{
-    return -1;  // This compiles but may not be correct
+{ // returns the number of ships in the game
+    return numShips;
 }
 
 int GameImpl::shipLength(int shipId) const
-{
-    return -1;  // This compiles but may not be correct
+{ // returns the length of the ship that is occupied by the shipID
+    
+    // checking to see if the ship ID exists
+    if (shipId > this->nShips()-1)
+        return -1;
+    else { // return the length of the correct shipID
+        return harbor[shipId]->length;
+    }
 }
 
 char GameImpl::shipSymbol(int shipId) const
 {
-    return '?';  // This compiles but may not be correct
+    // checking to see if the ship ID exists
+    if (shipId > this->nShips()-1)
+        return 'B';
+    else { // return the symbol of the correct shipID
+        return harbor[shipId]->symbol;
+    }
 }
 
 string GameImpl::shipName(int shipId) const
 {
-    return "";  // This compiles but may not be correct
+    // checking to see if the ship ID exists
+    if (shipId > this->nShips()-1)
+        return "BADEXCEPTION";
+    else { // return the length of the correct shipID
+        return harbor[shipId]->name;
+    }
 }
 
 Player* GameImpl::play(Player* p1, Player* p2, Board& b1, Board& b2, bool shouldPause)
@@ -206,4 +279,3 @@ Player* Game::play(Player* p1, Player* p2, bool shouldPause)
     Board b2(*this);
     return m_impl->play(p1, p2, b1, b2, shouldPause);
 }
-
