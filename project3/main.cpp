@@ -18,10 +18,16 @@ int main()
     assert(g.nShips() == 1);
     assert(g.addShip(3, 'B', "sub") == true);
     assert(g.addShip(2, 'T', "fardane") == true);
+    assert(g.addShip(13, 'X', "twelve") == false);
     assert(g.shipName(0) == "nuclear");
+    assert(g.shipSymbol(0) == 'A');
     assert(g.shipName(1) == "sub");
+    assert(g.shipSymbol(1) == 'B');
+    assert(g.shipSymbol(2) == 'T');
     assert(g.shipName(0) == "nuclear");
     assert(g.shipName(2) == "fardane");
+    assert(g.shipLength(0) == 5);
+    assert(g.shipLength(1) == 3);
     
     cout << "Passed all test cases" << endl;
     
