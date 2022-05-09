@@ -34,15 +34,16 @@ BoardImpl::BoardImpl(const Game& g)
 : m_game(g)
 {
     // Filling the Board with Periods
-    for (int i = 0; i < m_game.cols(); i++) {
-        for (int j = 0; j < m_game.rows(); j++){
-            board1[j][i] = '.';
+    for (int i = 0; i < m_game.rows(); i++) {
+        for (int j = 0; j < m_game.cols(); j++){
+            board1[i][j] = '.';
         }
     } // end for loop
     
     // Adding all of the shipID's to the vector
     for (int i = 0; i < m_game.nShips(); i++)
         idFleet.push_back(i);
+    cerr << "There are " << idFleet.size() << " ships in the harbor." << endl;
 } // end board implementation constructor
 
 void BoardImpl::clear()
@@ -148,15 +149,15 @@ bool BoardImpl::placeShip(Point topOrLeft, int shipId, Direction dir)
             break;
     }
     
-            //    5. The ship with that ship ID has previously been placed on this Board and not
-            //    yet been unplaced since its most recent placement.
-            
-            
-            /////////////////////////////////////////////////////////////////////
-            ///Placing the Actual Ship
-            ///////////////////////////////////////////////////////////
-            
-            //    bool
+    //    5. The ship with that ship ID has previously been placed on this Board and not
+    //    yet been unplaced since its most recent placement.
+    
+    
+    /////////////////////////////////////////////////////////////////////
+    ///Placing the Actual Ship
+    ///////////////////////////////////////////////////////////
+    
+    //    bool
     return true;
 } // end board implementation
 
@@ -167,7 +168,36 @@ bool BoardImpl::unplaceShip(Point topOrLeft, int shipId, Direction dir)
 
 void BoardImpl::display(bool shotsOnly) const
 {
-    // This compiles, but may not be correct
+    // Crude Implementation of Display for Testing Purposes
+    cout << "  "; // matching the column header
+    
+    for(int i=0; i < m_game.cols(); i++)
+    {
+        cout << i;
+    }
+    cout << '\n';
+    // working with the rows
+    for(int i = 0; i < m_game.rows(); i++)
+    {
+        cout << i << " "; // initial 2 spaces for the rows
+        for(int j = 0; j < m_game.cols(); j++)
+        {
+            if(shotsOnly == true)
+            {
+                if(board1[i][j] != 'X' || board1[i][j] != 'o')
+                    cout << "."; // printing hits only
+                else
+                { // printing hits (default)
+                    cout << board1[i][j];
+                }
+            }
+            else
+            { // regular board
+                cout << board1[i][j];
+            }
+        }
+        cout << '\n';
+    } // end for loop
 }
 
 bool BoardImpl::attack(Point p, bool& shotHit, bool& shipDestroyed, int& shipId)

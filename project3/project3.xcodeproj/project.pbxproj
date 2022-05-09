@@ -55,10 +55,10 @@
 				3491FC2028271D8E007B291F /* Game.cpp */,
 				3491FC2128271D8E007B291F /* Board.h */,
 				3491FC2228271D8E007B291F /* Board.cpp */,
+				3404A5C3282711AC00AF38D4 /* main.cpp */,
 				3491FC1C28271D83007B291F /* Player.cpp */,
 				3491FC1B28271D83007B291F /* Player.h */,
 				3491FC1E28271D8E007B291F /* globals.h */,
-				3404A5C3282711AC00AF38D4 /* main.cpp */,
 				3404A5BA2827115A00AF38D4 /* Products */,
 			);
 			sourceTree = "<group>";

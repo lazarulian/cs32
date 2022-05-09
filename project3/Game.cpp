@@ -57,7 +57,7 @@ GameImpl::~GameImpl()
     {
         delete harbor[i];
     }
-    cerr << "Destructed" << endl;
+//    cerr << "Destructed" << endl;
 }
 
 int GameImpl::rows() const

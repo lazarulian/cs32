@@ -9,9 +9,8 @@ using namespace std;
 
 int main()
 {
-    
+    // Testing the Initial Implementation of the Game Class
     Game g(5,3);
-    
     cout << g.rows() << endl;
     cout << g.cols() << endl;
     assert(g.addShip(5, 'A', "nuclear") == true);
@@ -28,8 +27,19 @@ int main()
     assert(g.shipName(2) == "fardane");
     assert(g.shipLength(0) == 5);
     assert(g.shipLength(1) == 3);
+    cout << g.nShips() << endl;
     
-    cout << "Passed all test cases" << endl;
+    cout << "Passed all test cases for game class" << endl;
+    
+    // Testing the Implementation of the Board Class
+    Board newboard(g);
+    newboard.display(false);
+    newboard.block();
+    cout << endl;
+    newboard.display(false);
+    newboard.unblock();
+    cout << endl;
+    newboard.display(false);
     
     return 0;
 }
