@@ -39,11 +39,11 @@ Midterm 1 | Pending
 Midterm 2 | Pending
 Final Exam | Pending
 --- | ---
-Homework 1   | 84%
-Homework 2  | Pending
+Homework 1  | 84%
+Homework 2  | 98%
 Homework 3  | Pending
 Homework 4  | Pending
-Homework  5| Pending
+Homework 5  | Pending
 --- | ---
 Project 1 | 100%
 Project 2 | 98%
