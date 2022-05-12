@@ -40,6 +40,15 @@ int main()
     newboard.unblock();
     cout << endl;
     newboard.display(false);
+    Point n(0, 0);
+    assert(newboard.placeShip(n, 0, HORIZONTAL) == false);
+    newboard.display(false);
+    newboard.clear();
+    newboard.display(false);
+    assert(newboard.placeShip(n, 2, HORIZONTAL) == true);
+    newboard.display(false);
+    assert(newboard.placeShip(n, 1, HORIZONTAL) == true);
+    newboard.display(false);
     
     return 0;
 }

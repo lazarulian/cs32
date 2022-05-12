@@ -2,6 +2,8 @@
 #include "Game.h"
 #include "globals.h"
 #include <iostream>
+#include <algorithm>
+#include <vector>
 
 using namespace std;
 
@@ -28,6 +30,8 @@ private:
     const Game& m_game;
     char board1[max_rows][max_cols];
     vector<int> idFleet;
+    vector<int> graveyard;
+    bool isIDValid(int shipID);
 };
 
 BoardImpl::BoardImpl(const Game& g)
@@ -40,10 +44,10 @@ BoardImpl::BoardImpl(const Game& g)
         }
     } // end for loop
     
-    // Adding all of the shipID's to the vector
-    for (int i = 0; i < m_game.nShips(); i++)
-        idFleet.push_back(i);
-    cerr << "There are " << idFleet.size() << " ships in the harbor." << endl;
+    //    // Adding all of the shipID's to the vector
+    //    for (int i = 0; i < m_game.nShips(); i++)
+    //        idFleet.push_back(i);
+    //    cerr << "There are " << idFleet.size() << " ships in the harbor." << endl;
 } // end board implementation constructor
 
 void BoardImpl::clear()
@@ -85,7 +89,7 @@ bool BoardImpl::placeShip(Point topOrLeft, int shipId, Direction dir)
     ///Testing the Placement
     ///////////////////////////////////////////////////////////
     // 1. The shipId is invalid
-    if (shipId > m_game.nShips()-1) // accessing a ship outside of the range
+    if (shipId >= m_game.nShips()) // accessing a ship outside of the range
         return false;
     if (m_game.nShips() == 0) // empty
         return false;
@@ -136,6 +140,7 @@ bool BoardImpl::placeShip(Point topOrLeft, int shipId, Direction dir)
             }
             break;
         case VERTICAL:
+            // iterate vertically from the start point to the end point
             for (int i = start_r; i < ship_length; i++)
             {
                 if (board1[i][start_c] != '.')
@@ -152,18 +157,144 @@ bool BoardImpl::placeShip(Point topOrLeft, int shipId, Direction dir)
     //    5. The ship with that ship ID has previously been placed on this Board and not
     //    yet been unplaced since its most recent placement.
     
+    vector<int>::iterator shipID_check;
+    shipID_check = find(idFleet.begin(), idFleet.end(), shipId);
+    if (shipID_check != idFleet.end())
+    {
+        return false;
+    }
     
     /////////////////////////////////////////////////////////////////////
     ///Placing the Actual Ship
     ///////////////////////////////////////////////////////////
     
-    //    bool
-    return true;
+    int left_r = topOrLeft.r;
+    int left_c = topOrLeft.c;
+    
+    switch (dir)
+    {
+        case HORIZONTAL:
+            for ( int i = left_c; i < (left_c+ship_length); i++)
+            {
+                board1[left_r][i] = ship_char;
+                continue;
+            }
+            break;
+        case VERTICAL:
+            for ( int i = left_r; i < (left_r+ship_length); i++)
+            {
+                board1[i][left_c] = ship_char;
+                continue;
+            }
+            break;
+        default:
+            break;
+    }
+    idFleet.push_back(shipId);
+    return true; // ship was able to be placed
 } // end board implementation
 
 bool BoardImpl::unplaceShip(Point topOrLeft, int shipId, Direction dir)
 {
-    return false; // This compiles, but may not be correct
+    
+    int spos_c = topOrLeft.c;
+    int spos_r = topOrLeft.r;
+    char sym_ship = m_game.shipSymbol(shipId);
+    int ship_length = m_game.shipLength(shipId);
+    
+    // Basic Tests we had already defined
+    if (m_game.isValid(topOrLeft) != true)
+        return false;
+    if (shipId >= m_game.nShips()) // accessing a ship outside of the range
+        return false;
+    if (m_game.nShips() == 0) // empty
+        return false;
+    if (shipId < 0)
+        return false;
+    
+    // Testing Whether the last position of the thing is valid
+    
+    Point h_end(spos_r, spos_c+ship_length-1);
+    Point v_end(spos_r+ship_length-1, spos_c);
+    
+    switch (dir) {
+        case HORIZONTAL:
+            if (m_game.isValid(h_end) == false)
+                return false;
+            break;
+        case VERTICAL:
+            if (m_game.isValid(v_end) == false)
+                return false;
+            break;
+        default:
+            return false;
+            break;
+    }
+    
+    //    1. The shipId is invalid - checking whether the ID is in the placed ships vector
+    vector<int>::iterator shipID_check;
+    shipID_check = find(idFleet.begin(), idFleet.end(), shipId);
+    if (shipID_check == idFleet.end())
+    {
+        return false;
+    }
+    //    2. The board does not contain the entire ship at the indicated locations.
+    
+    switch (dir)
+    { // checks if the correct symbol is present in all of the places that they are talkinga bout
+        case HORIZONTAL:
+            for ( int i = spos_c; i < (spos_c+ship_length); i++)
+            {
+                if (board1[spos_r][i] != sym_ship)
+                {
+                    return false;
+                }
+                else
+                    continue;
+            }
+            break;
+        case VERTICAL:
+            for ( int i = spos_r; i < (spos_r+ship_length); i++)
+            {
+                if (board1[i][spos_c] != sym_ship)
+                    return false;
+                else
+                    continue;
+            }
+            break;
+        default:
+            break;
+    }
+    /////////////////////////////////////////////
+    ///Actually removing the ship
+    ////////////////////////////////////////////
+    
+    int left_r = topOrLeft.r;
+    int left_c = topOrLeft.c;
+    
+    switch (dir)
+    {
+        case HORIZONTAL:
+            for ( int i = left_c; i < (left_c+ship_length); i++)
+            {
+                board1[left_r][i] = '.';
+                continue;
+            }
+            break;
+        case VERTICAL:
+            for ( int i = left_r; i < (left_r+ship_length); i++)
+            {
+                board1[i][left_c] = '.';
+                continue;
+            }
+            break;
+        default:
+            break;
+    }
+    
+    // Successful ship unplacement
+    idFleet.erase(idFleet.begin()+shipId);
+    return true;
 }
 
 void BoardImpl::display(bool shotsOnly) const
@@ -202,12 +333,92 @@ void BoardImpl::display(bool shotsOnly) const
 
 bool BoardImpl::attack(Point p, bool& shotHit, bool& shipDestroyed, int& shipId)
 {
-    return false; // This compiles, but may not be correct
-}
+    //the attack point is outside of the board area, or an attack is made on a previously attacked location
+    // Checking if the point is valid
+    int a_row = p.r;
+    int a_col = p.c;
+    
+    if (m_game.isValid(p) != true){
+        shotHit = false;
+        shipDestroyed = false;
+        return false;
+    }
+    // ID not in the ID list
+    vector<int>::iterator shipID_check;
+    shipID_check = find(idFleet.begin(), idFleet.end(), shipId);
+    if (shipID_check == idFleet.end())
+    {
+        shotHit = false;
+        shipDestroyed = false;
+        return false;
+    }
+    
+    // Already been hit
+    if (board1[a_row][a_col] == 'o' || board1[a_row][a_col] == 'X')
+    {
+        board1[a_row][a_col] = 'o';
+        shotHit = false;
+        shipDestroyed = false;
+        return false;
+    }
+    
+    // Valid Shots
+    // hits and misses
+    if (board1[a_row][a_col] == '.') {
+        shotHit = false;
+        shipDestroyed = false;
+        return true;
+    }
+    else
+    { // actually hits something
+        char hitship_symb = board1[a_row][a_col];
+        board1[a_row][a_col] = 'X';
+        shotHit = true;
+        for (int i = 0; i < m_game.rows(); i++)
+        {
+            if (board1[i][a_col] == hitship_symb)
+            {
+                shipDestroyed = false;
+                return true;
+            }
+        }
+        for (int i = 0; i < m_game.cols(); i++)
+        {
+            if (board1[a_row][i] == hitship_symb)
+            {
+                shipDestroyed = false;
+                return true;
+            }
+        }
+        
+        // Ship Sank
+        
+        //  If this specific attack destroyed the last undamaged segment of a ship, then the shipDestroyed parameter must be set to true and the shipId parameter must be set to the ship ID of the ship that was destroyed; otherwise the shipDestroyed parameter must be set to false and shipId must be left unchanged.
+
+        
+        for (int i = 0; i < m_game.nShips(); i++)
+        {
+            if (m_game.shipSymbol(i) == hitship_symb)
+            {
+                shipId = i;
+                graveyard.push_back(i);
+                break;
+            }
+        }
+    
+        shipDestroyed = true;
+        return true;
+    } // end else
+    
+    return false;
+} // end attack
 
 bool BoardImpl::allShipsDestroyed() const
 {
-    return false; // This compiles, but may not be correct
+    if (graveyard.size() == m_game.nShips())
+        return true;
+    else
+        return false;
 }
 
 //******************** Board functions ********************************
