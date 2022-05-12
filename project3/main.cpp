@@ -41,14 +41,61 @@ int main()
     cout << endl;
     newboard.display(false);
     Point n(0, 0);
+    Point p(2, 2);
+    Point d(13, 3);
     assert(newboard.placeShip(n, 0, HORIZONTAL) == false);
-    newboard.display(false);
     newboard.clear();
-    newboard.display(false);
     assert(newboard.placeShip(n, 2, HORIZONTAL) == true);
-    newboard.display(false);
+    assert(newboard.placeShip(n, 1, HORIZONTAL) == false);
+    assert(newboard.placeShip(n, 1, HORIZONTAL) == false);
+    assert(newboard.unplaceShip(n, 2, HORIZONTAL) == true);
+    assert(newboard.unplaceShip(n, 2, HORIZONTAL) == false);
     assert(newboard.placeShip(n, 1, HORIZONTAL) == true);
+    assert(newboard.placeShip(n, 1, HORIZONTAL) == false);
+    assert(newboard.unplaceShip(n, 1, HORIZONTAL) == true);
+
+    // Place Ship
+    assert(newboard.placeShip(p, 0, HORIZONTAL) == false);
+    // Unplace Ship
+    assert(newboard.unplaceShip(p, 0, HORIZONTAL) == false);
+//    assert(newboard.unplaceShip(p, 4, HORIZONTAL) == false);
+    // Void Display
+    cout << "This display should be empty" << endl;
     newboard.display(false);
+    newboard.placeShip(n, 2, HORIZONTAL);
+    cout << "This display should have one ship placed on it" << endl;
+    newboard.display(false);
+
+    // Attack
+    bool hit;
+    bool destroyed;
+    int shipID;
+    assert(newboard.attack(d, hit, destroyed, shipID) == false);
+    assert(newboard.attack(p, hit, destroyed, shipID) == true);
+    assert(hit == false);
+    assert(destroyed == false);
+
+    assert(newboard.attack(n, hit, destroyed, shipID) == true);
+    assert(hit == true);
+    assert(destroyed == false);
+
+    // Display
+    cout << "Displays entire board" << endl;
+    newboard.display(false);
+    cout << "Displays the board with only hits and misses" << endl;
+    newboard.display(true);
     
+    // all Ships Destroyed
+    assert(newboard.allShipsDestroyed() == false);
+    
+    
+    
+    
+    cout << "XXXXXXXXXXXXXXXXXXXXX" << endl;
+    cout << "XXXXXXXXXXXXXXXXXXXXX" << endl;
+    cout << "PASSED ALL TEST CASES" << endl;
+    cout << "XXXXXXXXXXXXXXXXXXXXX" << endl;
+    cout << "XXXXXXXXXXXXXXXXXXXXX" << endl;
+
     return 0;
 }

@@ -191,6 +191,9 @@ bool BoardImpl::placeShip(Point topOrLeft, int shipId, Direction dir)
             break;
     }
     idFleet.push_back(shipId);
+    for (int i = 0; i < idFleet.size(); i++)
+        cerr << idFleet[i] << ", ";
+    cerr << endl;
     return true; // ship was able to be placed
 } // end board implementation
 
@@ -293,7 +296,11 @@ bool BoardImpl::unplaceShip(Point topOrLeft, int shipId, Direction dir)
     }
     
     // Successful ship unplacement
-    idFleet.erase(idFleet.begin()+shipId);
+    for (int i = 0; i < idFleet.size(); i++)
+    {
+        if (idFleet[i] == shipId)
+            idFleet.erase(idFleet.begin()+i);
+    }
     return true;
 }
 
@@ -315,7 +322,7 @@ void BoardImpl::display(bool shotsOnly) const
         {
             if(shotsOnly == true)
             {
-                if(board1[i][j] != 'X' || board1[i][j] != 'o')
+                if(board1[i][j] != 'X' && board1[i][j] != 'o')
                     cout << "."; // printing hits only
                 else
                 { // printing hits (default)
@@ -341,30 +348,23 @@ bool BoardImpl::attack(Point p, bool& shotHit, bool& shipDestroyed, int& shipId)
     if (m_game.isValid(p) != true){
         shotHit = false;
         shipDestroyed = false;
-        return false;
-    }
-    // ID not in the ID list
-    vector<int>::iterator shipID_check;
-    shipID_check = find(idFleet.begin(), idFleet.end(), shipId);
-    if (shipID_check == idFleet.end())
-    {
-        shotHit = false;
-        shipDestroyed = false;
+        cerr << "Failed because: point invalid" << endl;
         return false;
     }
     
     // Already been hit
     if (board1[a_row][a_col] == 'o' || board1[a_row][a_col] == 'X')
     {
-        board1[a_row][a_col] = 'o';
         shotHit = false;
         shipDestroyed = false;
+        cerr << "Failed because: already hit" << endl;
         return false;
     }
     
     // Valid Shots
     // hits and misses
     if (board1[a_row][a_col] == '.') {
+        board1[a_row][a_col] = 'o'; // changes it
         shotHit = false;
         shipDestroyed = false;
         return true;
