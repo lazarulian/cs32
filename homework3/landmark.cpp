@@ -19,9 +19,9 @@ public:
     {
         return m_name;
     }
-    virtual ~Landmark() {}
-    virtual string color() const { return NULL; }
-    virtual string icon() const { return NULL; }
+    virtual ~Landmark() = 0;
+    virtual string color() = 0;
+    virtual string icon() = 0;
 
 private:
     string m_name;

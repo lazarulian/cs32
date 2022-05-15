@@ -96,6 +96,16 @@ int main()
     cout << "PASSED ALL TEST CASES" << endl;
     cout << "XXXXXXXXXXXXXXXXXXXXX" << endl;
     cout << "XXXXXXXXXXXXXXXXXXXXX" << endl;
+    
+    char direction = '.';
+    while (direction != 'h' && direction != 'v')
+    {
+        cout << "Enter h or v for direction of " << 3 << " (length " << 3 << " ): ";
+        cin >> direction;
+        cin.ignore(10000, '\n');
+        if (direction != 'h' || direction != 'v')
+            cout << "Direction must be h or v." << endl;
+    }
 
     return 0;
 }
