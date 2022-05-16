@@ -12,8 +12,6 @@
 
 using namespace std;
 
-string moveAtEnd(string s, int i, int l, string start);
-
 string endX(string str)
 {
     if (str.length() <= 1) // base case: no x’s to shift to end
