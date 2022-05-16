@@ -17,7 +17,12 @@ string longestCommonSubsequence(string s1, string s2);
 string longestCommonSubsequence(string s1, string s2)
 {
 
-    if (s1.length() == 0 || s2.length == 0)
+    if (s1.length() == 0 || s2.length() == 0)
+        return "";
+    // reached the end of the string
+
+    // if a character in the string matches, return 
+    if (s1.)
 
 
 

@@ -69,6 +69,7 @@
         "stack": "cpp",
         "deque": "cpp",
         "queue": "cpp",
-        "list": "cpp"
+        "list": "cpp",
+        "random": "cpp"
     }
 }
