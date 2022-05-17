@@ -70,6 +70,8 @@
         "deque": "cpp",
         "queue": "cpp",
         "list": "cpp",
-        "random": "cpp"
+        "random": "cpp",
+        "__tree": "cpp",
+        "__functional_base_03": "cpp"
     }
 }
