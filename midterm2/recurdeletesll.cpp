@@ -22,7 +22,7 @@ class LL
 {
     public:
     void delete_list(Node* &m_head);
-    void LL:reverse_list(Node* &m_head)
+    void reverse_list(Node* &m_head);
     private:
     Node* m_head;
 };
