@@ -1,3 +1,6 @@
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+// APURVA SHAH 705595011 - SMALLBERG SPRING 2022
+//////////////////////////////////////////////////////////////////////////////////////////////////////
 #include "Board.h"
 #include "Game.h"
 #include "globals.h"
@@ -8,8 +11,8 @@
 using namespace std;
 
 // Globals
-const int max_rows = 9;
-const int max_cols = 9;
+const int max_rows = 10;
+const int max_cols = 10;
 
 class BoardImpl
 {
@@ -194,9 +197,6 @@ bool BoardImpl::placeShip(Point topOrLeft, int shipId, Direction dir)
             break;
     }
     idFleet.push_back(shipId);
-    for (int i = 0; i < idFleet.size(); i++)
-        cerr << idFleet[i] << ", ";
-    cerr << endl;
     return true; // ship was able to be placed
 } // end board implementation
 
