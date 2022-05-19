@@ -50,7 +50,7 @@ void Stack::pop()
 
 int main()
 {
-    // Stack nameless;
+    Stack nameless;
 
     assert(nameless.empty() == true);
     nameless.push(1);

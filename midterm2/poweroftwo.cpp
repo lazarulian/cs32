@@ -12,20 +12,12 @@
 
 using namespace std;
 
-bool isSolvable(int x, int y, int c);
-
-bool isSolvable(int x, int y, int c)
+int powerofTwo(int x)
 {
-
-
-
-
-
-
-
-    
+    if (x == 0)
+        return 1;
+    return powerofTwo(x-1) + powerofTwo (x-1);
 }
-
 int main()
 {
 

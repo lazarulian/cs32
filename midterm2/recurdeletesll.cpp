@@ -49,7 +49,7 @@ void LL::reverse_list(Node* &m_head)
         Node* n = m_head;
         m_head = m_head->next;
         m_head->next = n;
-        return reverse_list(m_head;)
+        return reverse_list(m_head);
     }
 
 }

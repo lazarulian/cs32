@@ -63,12 +63,15 @@ void BoardImpl::clear()
 void BoardImpl::block()
 {
     // Block cells with 50% probability
-    for (int r = 0; r < m_game.rows(); r++)
-        for (int c = 0; c < m_game.cols(); c++)
-            if (randInt(2) == 0)
-            {
-                board1[r][c] = '~';
-            }
+    for(int i=0; i < (m_game.rows() * m_game.cols())/2; i++){ //repeat rc/2 times
+        Point p;
+        do {
+            p = m_game.randomPoint(); //random point
+            if(i==0)
+                board1[p.r][p.c] = '~'; //if first point being added, set to blocked
+        } while (board1[p.r][p.c]=='~' && i!=0); //loop that finds position on board that is not already blocked
+        board1[p.r][p.c] = '~'; //block position
+    }
 }
 
 void BoardImpl::unblock()
