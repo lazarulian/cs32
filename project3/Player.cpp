@@ -503,259 +503,168 @@ void MediocrePlayer::recordAttackByOpponent(Point p){
 class GoodPlayer : public Player {
 public:
     GoodPlayer(string nm, const Game& g);
-    ~GoodPlayer() {}
     virtual bool placeShips(Board& b);
     virtual Point recommendAttack();
     virtual void recordAttackResult(Point p, bool validShot, bool shotHit, bool shipDestroyed, int shipId);
     virtual void recordAttackByOpponent(Point p);
-    
 private:
-        int m_state;
-        bool recursive_placing(Board &b, int numShips);
-        vector<Point> attackedCells;
-        Point activated_point;
+    vector<Point> attackedCells;
+    Point m_state2Center;
+    bool isValidAttack(Point p);
+    bool state1;
+    stack<Point> potentialTargets;
+    void pushPotentialTargets(int dir, Point p);
+    int m_dir; //0 = vert, 1 = hor
 };
 
-GoodPlayer::GoodPlayer(string nm, const Game& g) : Player(nm, g), m_state(1) {}
+GoodPlayer::GoodPlayer(string nm, const Game& g) : Player(nm, g), state1(true), m_dir(0){}
 
 
 
-bool GoodPlayer::recursive_placing(Board &b, int numShips)
-{ // will recursively place a ship using backtracking to keep starting similar to maze path backtracking
-    
-    // DATA STRUCTURE / LOCAL VARIABLE IMPLEMENTATIONS
-    vector<Point> bad_locations; // used so that it doesnt reduntantly choose the same location
-
-    // BASE CASE
-    if(numShips == game().nShips())
-        return true;
-    
-    // RECURSIVE STEP
-
-    // Initial Loop through the Board to find a place to place the ships
-    for(int i = 0; i < game().rows(); i++)
-    { // first loop row
-        for(int j = 0; j < game().cols(); j++)
-        { // second loop col
-            Point p(i, j);
-            bool check_bad = false;
-            
-            for(int r = 0; r < bad_locations.size(); r++)
-            {
-                if(p.r == bad_locations[r].r && p.c == bad_locations[r].c)
-                {
-                    check_bad = true;
-                }
-            } // looping through the bad locations
-            
-
-            if(check_bad == false &&
-               (b.placeShip(p, numShips, HORIZONTAL) ||
-                b.placeShip(p, numShips, VERTICAL))) // test to place the ships down below
-            { // successful placement of ship
-                if(!recursive_placing(b, numShips + 1))
-                {
-                    if(b.unplaceShip(p, numShips, HORIZONTAL) == false)
-                       {
-                           b.unplaceShip(p, numShips, VERTICAL);
-                       }
-                    bad_locations.push_back(p);
-                    i=0;
-                    j=0;
-                }
-                else
-                {
-                    return true;
-                }
-            }
+bool GoodPlayer::placeShips(Board &b){ //places ships in alternate directions in random places
+    Direction d;
+    for(int i=0; i<game().nShips(); i++){ //place ships on game
+        Point p;
+        int counter = 0;
+        if(i%2==0){ //alternate directions
+            d = HORIZONTAL;
         }
-    }
-    return false;
-}
-
-bool GoodPlayer::placeShips(Board &b)
-{ // returns true if placed, will place the things around 50 times.
-    for(int i = 0; i < 50; i++)
-    {
-        // intial blocking of board
-        b.block();
-        
-        if(recursive_placing(b, 0) == true)
-        { // recursive call
-            b.unblock(); // unblock if true since placed
-            return true;
+        else{
+            d = VERTICAL;
         }
-        
-        // unblocking board if failed for another attempt
-        b.unblock();
+
+        do{
+            counter++;
+            if(counter==50) //fails if 50 attempts
+                return false;
+            p = game().randomPoint();
+        } while(!b.placeShip(p, i, d)); //place random ship s.t. it fits on board
     }
-    return false;
+    return true;
 }
 
 
-Point GoodPlayer::recommendAttack()
-{
+bool GoodPlayer::isValidAttack(Point p){ //returns if attack will be valid
+    if(!game().isValid(p))
+        return false;
+    for(int r=0; r<attackedCells.size(); r++){ //if point is in attacked cell set pInAttackedCells to true
+        if(p.r == attackedCells[r].r && p.c == attackedCells[r].c)
+            return false;;
+    }
+    return true;
+
+}
+
+void GoodPlayer::pushPotentialTargets(int dir, Point p){
+    if(dir==0){ //vertical
+        //adding South Cell (if viable)
+        Point S (p.r + 1, p.c);
+        if(isValidAttack(S))
+            potentialTargets.push(S);
+        
+        //adding North Cell (if viable)
+        Point N (p.r - 1, p.c);
+        if(isValidAttack(N))
+            potentialTargets.push(N);
+    }
+    if(dir==1){ //horizontal
+        //adding East Cell (if viable)
+        Point E (p.r, p.c + 1);
+        if(isValidAttack(E))
+            potentialTargets.push(E);
+        
+        //adding West Cell (if viable)
+        Point W (p.r, p.c - 1);
+        if(isValidAttack(W))
+            potentialTargets.push(W);
+    }
+    
+
+
+}
+
+Point GoodPlayer::recommendAttack(){ //two states, state1: go along diagonals. state 2: pick direction from hit, and if X, go along that direction largest ship size (basically cross but u pick one direction)
     Point p;
     
-    
-    // INITIAL STATE THAT DECLARES DORMANCY
-    
-    if(m_state == 1)
-    { // will choose a random point to attack since it is in state 1
-        bool already_attackedp = false;
-        do {
-            already_attackedp = false;
+    if(state1 || potentialTargets.empty()){ //state 1
+        state1 = true; //if no more targets to attack in stack go back to state 1
+        int counter = 0;
+        bool isEven = false;
+        do{
             p = game().randomPoint();
-            for(int r = 0; r < attackedCells.size(); r++)
-            {
-                if (p.r == attackedCells[r].r && p.c == attackedCells[r].c)
-                    already_attackedp = true;
+            isEven = (p.r + p.c)%2 == 0;
+            counter++;
+            if(counter>=MAXROWS*MAXCOLS/2){
+                isEven = true; //if checkerboard is filled, any random point is fine
             }
-        } while (already_attackedp == true);
-        
+        } while(!isValidAttack(p) || !isEven); //pick random points such that it hasnt been attacked before in a checkerboard pattern
+
+        return p; //recommend p
+    }
+
+    else{ //state 2
+        p = potentialTargets.top(); //attack point on top of the stack
+        potentialTargets.pop();
         return p;
     }
+    return p;
+}
+
+void GoodPlayer::recordAttackResult(Point p, bool validShot, bool shotHit, bool shipDestroyed, int shipId){
+    if(!validShot) //if shot was not valid do nothing
+        return;
+
+    attackedCells.push_back(p); //add p to list of attacked cells
     
-    else
-    { // ATTACK STATE
-        
-        // INITIAL BOOLEAN SETS THAT WILL CHANGE WITH DIFFERENT CONDITIONS (USED TO CHANGE INTO STATE)
-        bool already_attackedp = false;
-        bool cross_zone = false;
-        
-        do{
-            already_attackedp = false;
-            cross_zone = false;
-            // random assignment
-            p = game().randomPoint();
-            for(int r = 0; r < attackedCells.size(); r++)
-            { // already attacked
-                
-                if (p.r == attackedCells[r].r && p.c == attackedCells[r].c)
-                    already_attackedp = true;
-            }
-            
-            // SELECTING THE ZONE TO THE CROSS
-            if(((abs(activated_point.r - p.r) <= 4) && activated_point.c == p.c) || ((abs(activated_point.c - p.c) <= 4) && activated_point.r == p.r))
-            {
-                cross_zone = true;
-            }
-            // IS IT IN THE ATTACK OR CROSS
-        } while(already_attackedp ==  true || cross_zone == false);
-        
-        return p; // returns the point
-    }
-
-    return p; // returns the point
-}
-
-
-void GoodPlayer::recordAttackResult(Point p, bool validShot, bool shotHit, bool shipDestroyed, int shipId)
-{
-    if(validShot == false)
-        return; // should not be false, should return if it is
-
-
-    // now that it is attacked, it should be added to the list
-    attackedCells.push_back(p);
-
-
-    // DORMANCY STATE CHANGES
-    if(m_state == 1)
-    {
-        if(shotHit == 1)
-            return; // remains dormant if missed shot
-        else
-        { // these have to do with HIT CONDITIONS
-
-            if(shipDestroyed) // destroyed ship
-                return;
-
-            else
-            { // OTHER HIT (NON DESTROYED)
-                m_state = 2;
-                activated_point = p;
-                return;
-            }
-        }
-    } // end dormancy initial state
-
-
-
-    // STATE TWO THE ATTACK STATE :)
-    if(m_state != 1)
-    {
-        int attacked_hitzone = 0;
-        int cross_zoner = 0;
-
-
-        for(int i = -4; i < 5; i++)
-        { // ROWS OF THE CROSS
-            Point a(activated_point.r + i, activated_point. c);
-
-            if(game().isValid(a))
-            {
-                cross_zoner++;
-
-            }
-
-            for(int v=0; v< attackedCells.size(); v++)
-            {
-                if((attackedCells[v].r == activated_point.r + i) && (attackedCells[v].c == activated_point.c))
-                    attacked_hitzone++;
-                } // end forloop
-        } // end the rows of the cross
-
-
-        for(int i=-4; i<5; i++)
-        {
-            Point a(activated_point.r, activated_point.c+i);
-
-            if(game().isValid(a) == true)
-            {
-                cross_zoner++;
-            }
-
-            for(int v = 0; v < attackedCells.size(); v++)
-            {
-                if((attackedCells[v].c == activated_point.c + i) && (attackedCells[v].r == activated_point.r))
-                {
-                    attacked_hitzone++;
-                }
-            }
-        } // end loop for col
-
-
-
-        // CROSS FINISHED SIGNIFYING THAT THE SHIP IS LARGER THAN 5
-        if(attacked_hitzone == cross_zoner)
-        {
-            m_state = 1;
+    if(state1){ //state 1
+        if(!shotHit) //if shot didnt hit, stay in state 1
             return;
-        }
-
-        // MISSED IN THE CROSS
-        if(shotHit == false)
-            return; // dont do anything
-        else
-        {// SHIP DESTROYED?
-            if(shipDestroyed == true)
-            { // DONE WITH CROSS / SHIP
-                m_state = 1;
+        else{
+            if(shipDestroyed){ //if ship luckily destroyed, stay in state 1
                 return;
             }
-            else
-            { // stay in attack mode
+            else{ //if shot hit and didnt destroy, set to state 2
+                state1 = false;
+                //push 4 surrounding cells
+                m_dir=0;
+                pushPotentialTargets(m_dir, p);
+                m_dir=1;
+                pushPotentialTargets(m_dir, p);
+                m_state2Center = p;
                 return;
             }
         }
-
+    }
+    
+    else{ //state 2
+        if(!shotHit) //if shot didnt hit, stay in state 2
+            return;
+        else{
+            if(shipDestroyed){ //ship got destroyed
+                state1 = true; //switch back to state 1
+                while(!potentialTargets.empty()){ //clear potential targets
+                    potentialTargets.pop();
+                }
+                return;
+            }
+            else{ //if shot hit and didnt destroy, stay in state 2
+                //determine direction of the hit based on its position in the context of the original hit
+                if(m_state2Center.c == p.c){ //vertical
+                    m_dir = 0;
+                }
+                else if(m_state2Center.r == p.r){ //horizontal
+                    m_dir = 1;
+                }
+                pushPotentialTargets(m_dir, p); //push new potential targets
+                return;
+            }
+        }
+        
     }
 }
-
 
 void GoodPlayer::recordAttackByOpponent(Point p){
-    return;
+    ;
 }
 
 
