@@ -72,6 +72,9 @@
         "list": "cpp",
         "random": "cpp",
         "__tree": "cpp",
-        "__functional_base_03": "cpp"
+        "__functional_base_03": "cpp",
+        "map": "cpp",
+        "set": "cpp",
+        "unordered_set": "cpp"
     }
 }
