@@ -7,6 +7,15 @@
 
 using namespace std;
 
+struct Node
+{
+    string value;
+    Node* left;
+    Node* right;
+};
+
+// coding using this setup might be the new move
+
 int main()
 {
 
