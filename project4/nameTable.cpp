@@ -5,6 +5,7 @@
 
 #include "nameTable.h"
 #include <string>
+#include <list>
 #include <vector>
 using namespace std;
 
@@ -18,6 +19,15 @@ class NameTableImpl
     bool declare(const string& id, int lineNum);
     int find(const string& id) const;
   private:
+    // Declaring the Structure of the Node
+    struct Node
+    {
+        int scopeID;
+        int stringID;
+        int line_number;
+    };
+    // Declaring the DS for the Hash Function
+    vector<list<Node>*> buckets;
     vector<string> m_ids;
     vector<int> m_lines;
 };
