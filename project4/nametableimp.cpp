@@ -19,71 +19,68 @@ using namespace std;
 const int total_buckets = 20000;
 const int usable_buckets = 19997;
 
+// Class Implementation
+
 class NameTableImpl
 {
 public:
-    // constructor
-    NameTableImpl() : m_scope(0), hashmap(usable_buckets, list<Data>())
-    {;}
-    
-    // member functions
+    NameTableImpl();
     void enterScope();
     bool exitScope();
-    bool declare(const string& id, const int& lineNum);
-    int find(const string& id) const;
-    int duplicateScope(const string& id);
-    int hashFunction(const string& id) const;
+    bool declare(const string &id, const int &lineNum);
+    int find(const string &id) const;
+    int duplicateScope(const string &id);
     int getScope() const;
+    int hashFunction(const string &id) const;
+    void remove(const list<idData>::iterator it);
     bool validScope(int scope) const;
 
-    
 private:
     struct Data
     {
         string id;
+        int line;
         int scope;
-        int lineNum;
-        Data(string m_id, int m_scope, int m_num) : id(m_id), scope(m_scope), lineNum(m_num) {}
     };
-    
-    stack<list<Data>::iterator> declared;
-    void remove(const list<Data>::iterator it);
-    vector<list<Data>> hashmap;
-    int m_scope;
-};
 
-// Utility Functions
-bool NameTableImpl::validScope(int scope) const
-{
-   if (scope <= 0)
-       return false;
-   else
-       return true;
+    stack<list<idData>::iterator> declared;
+    vector < list<Data> hashmap;
+    int m_scope;
 }
 
-int NameTableImpl::getScope() const
+// Utility Functions
+bool NameTableImpl::validScope(int scope)
 {
-   return m_scope;
+    if (scope <= 0)
+        return false;
+    else
+        return true;
 }
 
 void NameTableImpl::remove(const list<Data>::iterator it)
 {
-   int hashDEX = hashFunction(it->id);
-   hashmap.at(hashDEX).erase(it);
+    int hashDEX = hashFunction(it->id);
+    hashmap.at(hashDEX).erase(it);
 }
 
-// Regular Functions
-
-int NameTableImpl::hashFunction(const string &id) const
+int NameTableImpl::getScope() const
 {
-   return hash<string>()(id) % usable_buckets;
+    return m_scope;
 }
 
+// void NameTableImpl::removalprocedure()
 
-void NameTableImpl::enterScope() {
-    ++m_scope;
+// Constructor
+
+NameTableImpl::NameTableImpl() : hashmap(usable_buckets, list<Data>())
+{
 }
 
+// Scoping Things
+void NameTableImpl::enterScope()
+{
+    m_scope = m_scope + 1;
+}
 
 bool NameTableImpl::exitScope()
 {
@@ -93,11 +90,11 @@ bool NameTableImpl::exitScope()
     }
 
     auto temp = declared.top();
-    for (; declared.top()->scope == m_scope && declared.empty() == false;)
+    for (; declared.top()->scope == m_scope && declared.empty() == false)
     {
         temp = declared.top();
         remove(temp);
-        declared.pop();
+        declared.pop()
     }
     --m_scope;
     return true;
@@ -108,20 +105,23 @@ bool NameTableImpl::declare(const string& id, const int& line)
 {
     if (!hashmap.empty())
     {
-//        cerr << "wasnt empty" << endl;
+        continue;
     }
-    else
+    else 
     {
         return false;
     }
 
-    if (duplicateScope(id) != 0)
+    if (duplicateScope(id) != 1)
     {
         return false;
     }
 
-    Data temp(id, getScope(), line);
-    
+    Data temp;
+    temp.scope = getScope();
+    temp.id = id;
+    temp.line = line;
+
     int hashspot = hashFunction(id);
     list<Data> &bucket = hashmap.at(hashspot);
     bucket.push_back(temp);
@@ -145,7 +145,6 @@ int NameTableImpl::duplicateScope(const string &id)
     return 0;
 }
 
-
 int NameTableImpl::find(const string& id) const
 {
     int found = 0;
@@ -158,7 +157,7 @@ int NameTableImpl::find(const string& id) const
     {
         if ((*it).id == id && (*it).scope >= largestScope)
         {
-            line = (*it).lineNum;
+            line = (*it).line;
             found = 1;
             largestScope = (*it).scope;
         }
@@ -168,40 +167,4 @@ int NameTableImpl::find(const string& id) const
         return -1;
     else
         return line;
-}
-
-
-//*********** NameTable functions **************
-
-// For the most part, these functions simply delegate to NameTableImpl's
-// functions.
-
-NameTable::NameTable()
-{
-    m_impl = new NameTableImpl;
-}
-
-NameTable::~NameTable()
-{
-    delete m_impl;
-}
-
-void NameTable::enterScope()
-{
-    m_impl->enterScope();
-}
-
-bool NameTable::exitScope()
-{
-    return m_impl->exitScope();
-}
-
-bool NameTable::declare(const string& id, int lineNum)
-{
-    return m_impl->declare(id, lineNum);
-}
-
-int NameTable::find(const string& id) const
-{
-    return m_impl->find(id);
 }

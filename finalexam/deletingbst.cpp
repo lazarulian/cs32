@@ -42,7 +42,6 @@ int findBST(Node *root, int target)
     return -1;
 }
 
-
 bool Search(int v, Node *root)
 {
     Node *ptr = root;
@@ -203,6 +202,7 @@ void deleteBST(Node *root, int target)
     else
         ptrparent->right = nullptr;
     delete ptr;
+    return;
 }
 
 int main()
